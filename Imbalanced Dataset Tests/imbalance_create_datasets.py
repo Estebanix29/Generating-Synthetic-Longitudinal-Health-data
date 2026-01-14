@@ -49,7 +49,7 @@ def create_oversample_imbalance(dataset, target_label, target_ratio=0.9):
     with_label = [s for s in dataset if s['labels'][target_label] == 1]
     without_label = [s for s in dataset if s['labels'][target_label] == 0]
     
-    # Calculate how many with_label samples we need
+    # Calculate how many with_label samples are needed
     target_total = len(dataset)
     n_without = int(target_total * (1 - target_ratio))
     n_with = int(target_total * target_ratio)

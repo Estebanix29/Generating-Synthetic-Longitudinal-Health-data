@@ -64,7 +64,7 @@ def evaluate_model(model, test_dataset, config, device, num_samples=1000):
             # code_probs shape: [batch, seq, code_vocab_size]
             # Position 0 predicts what comes at position 1
             # But it only predicts codes, not labels
-            # For generative evaluation, we sample the full sequence
+            # For generative evaluation, sample the full sequence
             
             # Sample labels by looking at position 0 predictions
             # Since model doesn't output label dimensions, use random sampling based on training dist

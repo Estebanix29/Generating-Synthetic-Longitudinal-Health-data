@@ -17,8 +17,8 @@ class DPGroupNorm(nn.Module):
         
         self.num_groups = num_groups
         self.eps = eps
-        # GroupNorm expects (batch, channels, *) but we have (batch, seq, hidden)
-        # So we'll manually reshape in forward
+        # GroupNorm expects (batch, channels, *) but input is (batch, seq, hidden)
+        # Manually reshape in forward
         self.weight = nn.Parameter(torch.ones(hidden_size))
         self.bias = nn.Parameter(torch.zeros(hidden_size))
         

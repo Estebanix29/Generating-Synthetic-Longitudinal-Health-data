@@ -1,12 +1,8 @@
 '''
-    ORIGINAL HALO Model from the paper
     code by Brandon Theodorou
     Original GPT-2 Paper and repository here: https://github.com/openai/gpt-2
     Original GPT-2 Pytorch Model: https://github.com/huggingface/pytorch-pretrained-BERT
     GPT-2 Pytorch Model Derived From: https://github.com/graykode/gpt-2-Pytorch
-    
-    This is the EXACT model.py from the paper's repository without any modifications.
-    Used for verifying results match the original paper.
 '''
 import copy
 import math
@@ -166,7 +162,7 @@ class AutoregressiveLinear(nn.Linear):
     NOTE: The original paper code has mask shape (in_features, out_features) but
     F.linear expects weight shape (out_features, in_features). Since the HALO model
     uses square matrices (in_features == out_features), this works but is technically
-    incorrect. We transpose the mask to match the weight shape for correctness.
+    incorrect. The mask is transposed to match the weight shape for correctness.
     """
     def __init__(self, in_features, out_features, bias=True):
         super().__init__(in_features, out_features, bias)

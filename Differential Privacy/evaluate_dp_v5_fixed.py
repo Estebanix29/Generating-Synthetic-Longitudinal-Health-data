@@ -1,4 +1,4 @@
-"""
+
 import os
 import pickle
 import json
@@ -95,7 +95,7 @@ def evaluate_model():
             # It only predicts CODES (0-6983), not labels/special tokens
             # Labels are in the INPUT at position 1: batch_ehr[:, 1, 6984:7009]
             # Position 0 of predictions predicts what should be at position 1 of input
-            # But we can't extract labels from predictions since it doesn't include them!
+            # Labels cannot be extracted from predictions since it doesn't include them
             
             # SOLUTION: Get true labels from input, compare against predictions at position 0
             # But predictions doesn't have label dimensions... 

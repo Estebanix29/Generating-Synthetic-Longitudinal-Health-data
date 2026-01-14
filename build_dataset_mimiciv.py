@@ -19,9 +19,9 @@ admissionDf = admissionDf.reset_index(drop=True)
 diagnosisDf = pd.read_csv(diagnosisFile, dtype={'hadm_id': str, 'icd_code': str})
 diagnosisDf = diagnosisDf[diagnosisDf['icd_code'].notnull()]
 
-# For MIMIC-IV, we need to handle both ICD9 and ICD10
-# The CCS definitions file uses ICD9, so we'll need to filter or convert
-# For now, let's use only ICD9 codes to match the original implementation
+# MIMIC-IV contains both ICD9 and ICD10 codes
+# The CCS definitions file uses ICD9, so filtering or conversion may be needed
+# For now, use only ICD9 codes to match the original implementation
 print(f"Total diagnosis records: {len(diagnosisDf)}")
 print(f"ICD9 records: {len(diagnosisDf[diagnosisDf['icd_version'] == 9])}")
 print(f"ICD10 records: {len(diagnosisDf[diagnosisDf['icd_version'] == 10])}")
@@ -31,7 +31,7 @@ print(f"ICD10 records: {len(diagnosisDf[diagnosisDf['icd_version'] == 10])}")
 # diagnosisDf = diagnosisDf[diagnosisDf['icd_version'] == 9]
 
 # Option 2: Use both ICD9 and ICD10 (more data, but may not map perfectly to CCS)
-# We'll keep both and handle the mapping later
+# Keep both and handle the mapping later
 print("\nNote: Using both ICD9 and ICD10 codes. ICD10 codes that don't map to CCS groups will not contribute to labels.")
 
 print("\nBuilding Dataset - Optimized approach")

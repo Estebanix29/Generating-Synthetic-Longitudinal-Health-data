@@ -59,7 +59,7 @@ def get_batch(loc, batch_size, mode):
       batch_ehr[i,j+2][v] = 1
       batch_mask[i,j+2] = 1
     batch_ehr[i,1,config.code_vocab_size:config.code_vocab_size+config.label_vocab_size] = np.array(p['labels']) # Set the patient labels
-    visit_end_idx = min(len(visits)+1, config.n_ctx-1)  # Ensure we don't exceed context
+    visit_end_idx = min(len(visits)+1, config.n_ctx-1)  # Ensure context length is not exceeded
     batch_ehr[i,visit_end_idx,config.code_vocab_size+config.label_vocab_size+1] = 1 # Set the final visit to have the end token
     if visit_end_idx + 1 < config.n_ctx:
       batch_ehr[i,visit_end_idx+1:,config.code_vocab_size+config.label_vocab_size+2] = 1 # Set the rest to the padded visit token
