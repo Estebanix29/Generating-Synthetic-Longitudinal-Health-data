@@ -189,9 +189,7 @@ def train_with_custom_dp(config, args, train_dataset, val_dataset, device, save_
         accountant="rdp"
     )
     
-    print(f"\n{'='*60}")
-    print(f"Custom DP-SGD Training Configuration")
-    print(f"{'='*60}")
+    print(f"\nCustom DP-SGD Training Configuration")
     print(f"Privacy Parameters:")
     print(f"  Target ε (epsilon): {epsilon}")
     print(f"  δ (delta): {delta}")
@@ -204,8 +202,7 @@ def train_with_custom_dp(config, args, train_dataset, val_dataset, device, save_
     print(f"  Epochs: {args.epochs}")
     print(f"  Learning rate: {args.learning_rate}")
     print(f"  Total steps: {total_steps}")
-    print(f"\nMemory: Same as baseline (NO per-sample gradients!)")
-    print(f"{'='*60}\n")
+    print(f"\nMemory: Same as baseline (no per-sample gradients)")
     
     # TensorBoard
     writer = SummaryWriter(log_dir=os.path.join(save_dir, 'runs'))
@@ -287,12 +284,10 @@ def train_with_custom_dp(config, args, train_dataset, val_dataset, device, save_
             
             # Check if privacy budget exhausted
             if current_epsilon >= epsilon:
-                print(f"\n{'='*60}")
-                print(f"🛑 PRIVACY BUDGET EXHAUSTED")
-                print(f"   Current ε: {current_epsilon:.4f}")
-                print(f"   Target ε: {epsilon:.4f}")
-                print(f"   Training stopped early to preserve privacy guarantee.")
-                print(f"{'='*60}\n")
+                print(f"\nPrivacy budget exhausted")
+                print(f"  Current epsilon: {current_epsilon:.4f}")
+                print(f"  Target epsilon: {epsilon:.4f}")
+                print(f"  Training stopped early to preserve privacy guarantee.")
                 
                 log_file.write(f"\nPrivacy budget exhausted at epoch {epoch+1}, step {global_step}\n")
                 log_file.write(f"Final ε: {current_epsilon:.4f}\n")

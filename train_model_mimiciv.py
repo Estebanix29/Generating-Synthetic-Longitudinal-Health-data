@@ -5,7 +5,7 @@ import random
 import pickle
 from tqdm import tqdm
 from model import HALOModel
-from config_mimiciv import HALOConfig
+from config import HALOConfig
 from datetime import datetime
 import time
 
@@ -44,10 +44,8 @@ def get_batch(loc, batch_size, mode):
   #   And where each Label L is a binary vector [L_1 ... L_n]
   if mode == 'train':
     ehr = train_ehr_dataset[loc:loc+batch_size]
-  elif mode == 'valid':
-    ehr = val_ehr_dataset[loc:loc+batch_size]
   else:
-    ehr = test_ehr_dataset[loc:loc+batch_size]
+    ehr = val_ehr_dataset[loc:loc+batch_size]
     
   batch_ehr = np.zeros((len(ehr), config.n_ctx, config.total_vocab_size))
   batch_mask = np.zeros((len(ehr), config.n_ctx, 1))
@@ -118,9 +116,7 @@ training_start_time = time.time()
 
 for e in range(config.epoch):
   epoch_start_time = time.time()
-  print(f"\n{'='*80}")
-  print(f"EPOCH {e+1}/{config.epoch} - Started at {datetime.now().strftime('%H:%M:%S')}")
-  print(f"{'='*80}")
+  print(f"\nEpoch {e+1}/{config.epoch} - Started at {datetime.now().strftime('%H:%M:%S')}")
   
   shuffle_training_data(train_ehr_dataset)
   epoch_loss = 0.0

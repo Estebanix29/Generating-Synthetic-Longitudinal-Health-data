@@ -1,9 +1,12 @@
 '''
-    Training script for the HALO model architecture (from the paper)
+    Training script for the ORIGINAL HALO model architecture (from the paper)
     
-    For MIMIC-III:
-    - Run: python train_model.py
-    - Memory: ~8-12GB GPU
+    This uses model_original.py which matches the paper exactly.
+    The checkpoint will be saved separately as 'halo_model_original'
+    
+    For MIMIC-III on Vast.ai:
+    - Run: python train_model_original.py
+    - Memory: ~8-12GB GPU (original architecture is larger)
     - Time: ~4-8 hours for 50 epochs
 '''
 import os
@@ -21,8 +24,8 @@ np.random.seed(SEED)
 torch.manual_seed(SEED)
 config = HALOConfig()
 
-# Model save path
-SAVE_PATH = './save/halo_model'
+# Model save path - separate from modified model
+SAVE_PATH = './save/halo_model_original'
 
 local_rank = -1
 fp16 = False

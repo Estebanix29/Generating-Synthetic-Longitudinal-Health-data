@@ -337,7 +337,7 @@ def validate_dp_compatibility(model):
 
 if __name__ == "__main__":
     # Demo: Create DP-compatible model and validate
-    print("\nDEMONSTRATION: DP-Compatible HALO Model\n")
+    print("\nDP-Compatible HALO Model Demo\n")
     
     # Create minimal config
     class TestConfig:

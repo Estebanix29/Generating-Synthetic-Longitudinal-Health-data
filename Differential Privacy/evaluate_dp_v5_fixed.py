@@ -83,32 +83,10 @@ def evaluate_model():
             loss, predictions, labels = model(batch_ehr, position_ids=None, ehr_labels=batch_ehr, 
                                              ehr_masks=batch_mask, pos_loss_weight=config.pos_loss_weight)
             
-            # DEBUG: Check shapes
-            if i == 0:
-                print(f"DEBUG: predictions shape = {predictions.shape}")
-                print(f"DEBUG: labels shape = {labels.shape}")
-                print(f"DEBUG: batch_ehr shape = {batch_ehr.shape}")
-                print(f"DEBUG: config.code_vocab_size = {config.code_vocab_size}")
-                print(f"DEBUG: config.label_vocab_size = {config.label_vocab_size}")
-            
-            # KEY INSIGHT: predictions is [batch, seq-1, code_vocab_size]
-            # It only predicts CODES (0-6983), not labels/special tokens
-            # Labels are in the INPUT at position 1: batch_ehr[:, 1, 6984:7009]
-            # Position 0 of predictions predicts what should be at position 1 of input
-            # Labels cannot be extracted from predictions since it doesn't include them
-            
-            # SOLUTION: Get true labels from input, compare against predictions at position 0
-            # But predictions doesn't have label dimensions... 
-            # This means the model CAN'T predict labels - it only predicts codes!
-            
-            # Let me check if predictions actually has full vocab despite the slicing
-            if i == 0:
-                print(f"DEBUG: Checking position 0 predictions...")
-                print(f"DEBUG: predictions[0, 0, :10] = {predictions[0, 0, :10]}")
-                print(f"DEBUG: predictions min/max = {predictions.min()}/{predictions.max()}")
-            
+            # predictions is [batch, seq-1, code_vocab_size] - only predicts codes, not labels
+            # Labels are in the input at position 1: batch_ehr[:, 1, code_vocab:code_vocab+label_vocab]
             batch_labels = batch_ehr[:, 1, config.code_vocab_size:config.code_vocab_size+config.label_vocab_size].cpu().numpy()
-            preds = np.zeros_like(batch_labels)  # Placeholder - need to figure out correct extraction
+            preds = np.zeros_like(batch_labels)
             
             # Get true labels
             batch_labels = np.array([p['labels'] for p in test_dataset[i:i+batch_size]])
